@@ -5,14 +5,30 @@ import DrumPad from './components/DrumPad'
 import DrumDisplay from './components/DrumDisplay'
 import './App.css';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
         name: 'MT22 v1',
-        power: false
+        power: false,
+        display: ''
       }
+    // this.handleClick = this.handleClick.bind(this);
+    this.updateDisplay = this.updateDisplay.bind(this);
   }
+
+  updateDisplay = (id) => {
+    let x = document.getElementById(id);
+    x.play();
+    this.setState({ display: id });
+
+  }
+  // handleClick() {
+  //   this.setState(state => ({
+  //     isToggleOn: !state.isToggleOn
+  //   }));
+  // }
 
   render() {
     return (
@@ -20,12 +36,10 @@ class App extends Component {
         <div id="drum-machine">
           <DrumName name={this.state.name}/>
           <DrumSettings power={this.state.power} />
-          <DrumPad />
-          <DrumDisplay />
-          <section id="display"></section>
+          <DrumPad onClick={this.updateDisplay}/>
+          <DrumDisplay textToDisplay={this.state.display}/>
         </div>
       </div>
-
     );
   }
 }
